@@ -1,4 +1,4 @@
-ENU = {
+MENU = {
     "espresso": {
         "ingredients": {
             "water": 50,
