@@ -1,24 +1,30 @@
 import coffee_data
 
-run = True
+resources = coffee_data.resources
 
-while run:
+machine_on = True
+
+while machine_on:
     user_choice = input("What would you like to drink? (espresso/latte/cappuccino): \n").lower()
 
     if user_choice == "off":
-        run = False
+        machine_on = False
 
-    if user_choice == "report":
-        # TODO generate report showing current resource values
-        pass
+    def handle_report():
+        report = (f"Water: {resources['water']}\n"
+        f"Milk: {resources['milk']}\n"
+        f"Coffee: {resources['coffee']}")
+        return report
 
     # TODO check if resources are sufficient
 
-    # TODO process coine
+    # TODO process coins
 
-    # TODO check if transaction is successful
-        # if too much money, return change
+    # TODO check if transaction is successful, if too much money, return change
 
     # TODO Make the coffee
 
-    # Thank user for using coffemaker deluxe v10.0 
+    # TODO Thank user for using coffemaker deluxe v10.0
+
+    if user_choice == "report":
+        print(handle_report())
