@@ -2,6 +2,12 @@ import coffee_data
 
 resources = coffee_data.resources
 
+def handle_report():
+    report = (f"Water: {resources['water']}\n"
+    f"Milk: {resources['milk']}\n"
+    f"Coffee: {resources['coffee']}")
+    return report
+
 machine_on = True
 
 while machine_on:
@@ -9,12 +15,6 @@ while machine_on:
 
     if user_choice == "off":
         machine_on = False
-
-    def handle_report():
-        report = (f"Water: {resources['water']}\n"
-        f"Milk: {resources['milk']}\n"
-        f"Coffee: {resources['coffee']}")
-        return report
 
     # TODO check if resources are sufficient
 
