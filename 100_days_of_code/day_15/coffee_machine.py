@@ -35,6 +35,8 @@ while machine_on:
 
     # TODO Thank user for using coffemaker deluxe v10.0
 
+
+    # TODO fix error with user_choice = off caused by check_resources
     if user_choice == "off":
         machine_on = False
 
