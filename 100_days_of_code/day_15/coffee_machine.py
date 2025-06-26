@@ -8,13 +8,15 @@ def handle_report():
     f"Coffee: {resources['coffee']}")
     return report
 
+def check_resources():
+    
+
+
+
 machine_on = True
 
 while machine_on:
     user_choice = input("What would you like to drink? (espresso/latte/cappuccino): \n").lower()
-
-    if user_choice == "off":
-        machine_on = False
 
     # TODO check if resources are sufficient
 
@@ -28,3 +30,6 @@ while machine_on:
 
     if user_choice == "report":
         print(handle_report())
+
+    if user_choice == "off":
+        machine_on = False
