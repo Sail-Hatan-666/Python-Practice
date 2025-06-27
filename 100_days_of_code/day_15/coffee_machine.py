@@ -4,6 +4,7 @@ resources = coffee_data.resources
 espresso = coffee_data.MENU["espresso"]
 latte = coffee_data.MENU["latte"]
 cappiccino = coffee_data.MENU["cappuccino"]
+MENU = coffee_data.MENU
 
 def handle_report():
     report = (f"Water: {resources['water']}\n"
@@ -13,17 +14,24 @@ def handle_report():
 
 # TODO check if resources are sufficient
 def check_resources(choice):
+    missing_ingredients = []
+
     for ingredient in coffee_data.MENU[choice]["ingredients"]:
         amount_needed = coffee_data.MENU[choice]['ingredients'][ingredient]
         amount_left = coffee_data.resources[ingredient]
         if amount_needed > amount_left:
-            print(f"Sorry we're all out {ingredient}")
-        else:
-            pass
+            missing_ingredients.append(ingredient)
+    
+    if len(missing_ingredients) > 0:
+        missing_ingredients_formatted = ", ".join(missing_ingredients[:-1]) + " and " + missing_ingredients[-1]
+        return f"Sorry, we're all out of {missing_ingredients_formatted}."
+    else:
+        return handle_choice(choice)
 
 # TODO Make the coffee
 def handle_choice(choice):
-    pass
+    if choice in MENU:
+        print("Good Choice")
 
 # TODO process coins
 def handle_payment():
@@ -47,4 +55,5 @@ while machine_on:
     if user_choice == "report":
         print(handle_report())
 
-    check_resources(user_choice)
+    result = check_resources(user_choice)
+    print(result)
