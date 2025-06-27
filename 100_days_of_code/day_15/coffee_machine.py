@@ -30,9 +30,9 @@ def check_resources(choice):
 # TODO Make the coffee
 def make_coffee(choice):
     ingredients = [ingredient for ingredient in MENU[choice]["ingredients"]]
-    for ingredient in MENU[choice]["ingredients"]:
-        if ingredient in resources:
-            ingredients.append(ingredient)
+    # for ingredient in MENU[choice]["ingredients"]:
+    #     if ingredient in resources:
+    #         ingredients.append(ingredient)
     return ingredients
         
 
