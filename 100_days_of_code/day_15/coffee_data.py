@@ -25,14 +25,14 @@ MENU = {
 }
 
 profit = 0
-# resources = {
-#     "water": 300,
-#     "milk": 200,
-#     "coffee": 100,
-# }
-
 resources = {
-    "water": 10,
-    "milk": 10,
-    "coffee": 10,
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
 }
+
+# resources = {
+#     "water": 10,
+#     "milk": 10,
+#     "coffee": 10,
+# }

@@ -22,22 +22,24 @@ def check_resources(choice):
     
     if len(missing_ingredients) > 0:
         missing_ingredients_formatted = ", ".join(missing_ingredients[:-1]) + " and " + missing_ingredients[-1]
-        return f"Sorry, we're all out of {missing_ingredients_formatted}."
+
+        return f"Sorry, we don't have enough {missing_ingredients_formatted}."
     else:
         return make_coffee(choice)
 
 
 # TODO Make the coffee
 def make_coffee(choice):
-    ingredients = [ingredient for ingredient in MENU[choice]["ingredients"]]
-    # for ingredient in MENU[choice]["ingredients"]:
-    #     if ingredient in resources:
-    #         ingredients.append(ingredient)
-    return ingredients
-        
+    # updated_value = []
+    for key in MENU[choice]["ingredients"]:
+        if key in resources:
+            # resources.update(resources - MENU[choice]["ingredients"])
+            updated_value = resources[key] - MENU[choice]["ingredients"][key]
+            resources[key] = updated_value
+    print(resources)
+    return f"Your {choice} is ready! Enjoy carefully as products are hot!"
 
-
-
+    
     # When the user chooses their drink, deduct rources needed from current resources in coffee_data.py
     # How do I do that?
     # resources available - resources needed
@@ -59,7 +61,14 @@ while machine_on:
 
     # TODO Thank user for using coffemaker deluxe v10.0
 
-
+    if user_choice in MENU:
+        # check_resources(user_choice)
+        print(check_resources(user_choice))
+        print(handle_report())
+    elif user_choice == "off":
+        machine_on = False
+    elif user_choice == "report":
+        print(handle_report())
     # TODO fix error with user_choice = off caused by check_resources
     # if user_choice == "off":
     #     machine_on = False
@@ -67,8 +76,10 @@ while machine_on:
     # if user_choice == "report":
     #     print(handle_report())
 
-    result = check_resources(user_choice)
-    done = make_coffee(user_choice)
+
+
+    # result = check_resources(user_choice)
+    # done = make_coffee(user_choice)
 
     # print(result)
-    print(done)
+    # print(done)
