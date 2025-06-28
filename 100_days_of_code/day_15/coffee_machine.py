@@ -76,7 +76,7 @@ while machine_on:
     # if user_choice == "report":
     #     print(handle_report())
 
-
+    # TODO add function to refill the machine
 
     # result = check_resources(user_choice)
     # done = make_coffee(user_choice)
