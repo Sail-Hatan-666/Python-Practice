@@ -13,9 +13,9 @@ def handle_report():
 
 def check_resources(choice):
     missing_ingredients = []
-    for ingredient in coffee_data.MENU[choice]["ingredients"]:
-        amount_needed = coffee_data.MENU[choice]['ingredients'][ingredient]
-        amount_left = coffee_data.resources[ingredient]
+    for ingredient in MENU[choice]["ingredients"]:
+        amount_needed = MENU[choice]['ingredients'][ingredient]
+        amount_left = resources[ingredient]
         if amount_needed > amount_left:
             missing_ingredients.append(ingredient)
     return missing_ingredients
