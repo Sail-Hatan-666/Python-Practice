@@ -1,7 +1,6 @@
-import coffee_data
-
-resources = coffee_data.resources
-MENU = coffee_data.MENU
+from coffee_data import MENU
+from coffee_data import resources
+from coffee_data import profit
 
 
 def handle_report():
@@ -18,16 +17,18 @@ def check_resources(choice):
         amount_left = resources[ingredient]
         if amount_needed > amount_left:
             missing_ingredients.append(ingredient)
-    return missing_ingredients
+    if len(missing_ingredients) == 0:
+        return True
+    else: 
+        return False
 
 
 # TODO Make the coffee
 def make_coffee(choice):
     for key in MENU[choice]["ingredients"]:
         if key in resources:
-            updated_value = resources[key] - MENU[choice]["ingredients"][key]
+            updated_value = resources[key] - MENU["ingredients"][key]
             resources[key] = updated_value
-    return f"Your {choice} is ready! Enjoy carefully as products are hot!"
 
 
 # TODO process coins
@@ -41,15 +42,14 @@ def handle_payment(
     cost = MENU[choice]["cost"]
     total = quarters + dimes + nickels + pennies
     total_format = f"${quarters + dimes + nickels + pennies:.2f}"
+    change = f"{total - cost:.2f}"
     if total < cost:
-        return (f"Your total is {total_format}. Sorry that's not enough money."
-                "Transaction cancelled.")
-    elif total >= cost:
-        if total == cost:
-            return f"Your total is {total_format}. {make_coffee (choice)}."
-        elif total > cost:
-            return (f"Your total is {total_format}. {make_coffee (choice)}."
-                    f"Heres is ${total - cost:.2f} in change.")
+        change = None
+        return False, total_format, change
+    elif total > cost:
+         return True, total_format, change
+    elif total == cost:
+        return True, total_format, change
 
 
 machine_on = True
@@ -61,6 +61,23 @@ while machine_on:
         "(espresso $1.50/latte $2.50/cappuccino $3.00): \n"
         ).lower()
     
+    pennies = int(input("How many pennies?")) * 0.01
+    dimes = int(input("How many dimes?")) * 0.05
+    nickles = int(input("How many nickles?")) * 0.1
+    quarters = int(input("How many quarters?")) * 0.25
+
+    if user_choice == "off":
+        machine_on = False
+    
+    if user_choice == "report":
+        print(handle_report())
+
+    if user_choice in MENU:
+        if not check_resources(user_choice):
+            pass
+    else:
+        print("Please enter a valid option.")
+
 
     # TODO add function to refill the machine perhaps this, off and report can \
     # only be handled by an admin with a password?
