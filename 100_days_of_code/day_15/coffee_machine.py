@@ -47,7 +47,7 @@ def handle_payment(
         change = None
         return False, total_format, change
     elif total > cost:
-         return True, total_format, change
+        return True, total_format, change
     elif total == cost:
         return True, total_format, change
 
