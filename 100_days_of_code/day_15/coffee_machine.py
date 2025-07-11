@@ -5,8 +5,8 @@ from coffee_data import profit
 
 def handle_report():
     report = (f"Water: {resources['water']}\n"
-    f"Milk: {resources['milk']}\n"
-    f"Coffee: {resources['coffee']}")
+                f"Milk: {resources['milk']}\n"
+                f"Coffee: {resources['coffee']}")
     return report
 
 
@@ -27,7 +27,7 @@ def check_resources(choice):
 def make_coffee(choice):
     for key in MENU[choice]["ingredients"]:
         if key in resources:
-            updated_value = resources[key] - MENU["ingredients"][key]
+            updated_value = resources[key] - MENU[choice]["ingredients"][key]
             resources[key] = updated_value
 
 
@@ -45,11 +45,11 @@ def handle_payment(
     change = f"{total - cost:.2f}"
     if total < cost:
         change = None
-        return False, total_format, change
+        return False, total, total_format, change
     elif total > cost:
-        return True, total_format, change
+        return True, total, total_format, change
     elif total == cost:
-        return True, total_format, change
+        return True, total, total_format, change
 
 
 machine_on = True
@@ -60,11 +60,6 @@ while machine_on:
         "What would you like to drink? "
         "(espresso $1.50/latte $2.50/cappuccino $3.00): \n"
         ).lower()
-    
-    pennies = int(input("How many pennies?")) * 0.01
-    dimes = int(input("How many dimes?")) * 0.05
-    nickles = int(input("How many nickles?")) * 0.1
-    quarters = int(input("How many quarters?")) * 0.25
 
     if user_choice == "off":
         machine_on = False
@@ -72,12 +67,37 @@ while machine_on:
     if user_choice == "report":
         print(handle_report())
 
-    if user_choice in MENU:
-        if not check_resources(user_choice):
-            pass
+    if user_choice in MENU and check_resources(user_choice):
+        pennies = int(input("How many pennies? \n")) * 0.01
+        nickels = int(input("How many nickles? \n")) * 0.05
+        dimes = int(input("How many dimes? \n")) * 0.1
+        quarters = int(input("How many quarters? \n")) * 0.25
+        money_in, total, total_format, change = handle_payment(
+                                                user_choice,
+                                                quarters,
+                                                dimes,
+                                                nickels,
+                                                pennies)
+        if money_in and total == MENU[user_choice]["cost"]:
+            make_coffee(user_choice)
+            print(f"You inserted {total_format}. "
+                    f"Your {user_choice.title()} is ready! Enjoy!")
+        elif money_in and total > MENU[user_choice]["cost"]:
+            make_coffee(user_choice)
+            print(f"You inserted {total_format}. "
+                    f"You're {user_choice.title()} is ready! Enjoy!\n"
+                    f"Here's your change: ${change}")
+        elif not money_in:
+            print(f"You inserted {total_format}. "
+                    f"Sorry, {user_choice.title()} "
+                    f"costs ${MENU[user_choice]["cost"]:.2f}\f"
+                    "Please try again")
     else:
         print("Please enter a valid option.")
 
 
-    # TODO add function to refill the machine perhaps this, off and report can \
+    # TODO add function to refill the machine perhaps this, off and report can 
     # only be handled by an admin with a password?
+
+    # TODO Fix error handling for empty resources. When resource empty, else
+    # block runs.
