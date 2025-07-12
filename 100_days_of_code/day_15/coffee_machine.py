@@ -18,12 +18,12 @@ def check_resources(choice):
         if amount_needed > amount_left:
             missing_ingredients.append(ingredient)
     if len(missing_ingredients) == 0:
-        return True
+        return True, []
     else: 
-        return False
+        return False, missing_ingredients
 
 
-# TODO Make the coffee
+# [x] TODO Make the coffee
 def make_coffee(choice):
     for key in MENU[choice]["ingredients"]:
         if key in resources:
@@ -31,7 +31,7 @@ def make_coffee(choice):
             resources[key] = updated_value
 
 
-# TODO process coins
+# [x] TODO process coins
 def handle_payment(
         choice, 
         quarters, 
@@ -67,7 +67,9 @@ while machine_on:
     if user_choice == "report":
         print(handle_report())
 
-    if user_choice in MENU and check_resources(user_choice):
+    state, missing_ingredients = check_resources(user_choice)
+
+    if user_choice in MENU and state:
         pennies = int(input("How many pennies? \n")) * 0.01
         nickels = int(input("How many nickles? \n")) * 0.05
         dimes = int(input("How many dimes? \n")) * 0.1
@@ -92,6 +94,13 @@ while machine_on:
                     f"Sorry, {user_choice.title()} "
                     f"costs ${MENU[user_choice]["cost"]:.2f}\f"
                     "Please try again")
+    elif user_choice in MENU and not state:
+        if len(missing_ingredients) > 1:
+            format_missing_ingredents = ", ".join(missing_ingredients[:-1])
+            + " and " + missing_ingredients[-1]
+            print(f"Sorry we are out of {format_missing_ingredents}")
+        elif len(missing_ingredients) == 1:
+            print(f"Sorry we are out of {missing_ingredients[0]}")
     else:
         print("Please enter a valid option.")
 
