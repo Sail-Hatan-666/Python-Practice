@@ -3,13 +3,14 @@ from coffee_data import resources
 from coffee_data import profit
 
 
+# [x] TODO Handle Report
 def handle_report():
     report = (f"Water: {resources['water']}\n"
                 f"Milk: {resources['milk']}\n"
                 f"Coffee: {resources['coffee']}")
     return report
 
-
+# [x] TODO Check Resources
 def check_resources(choice):
     missing_ingredients = []
     for ingredient in MENU[choice]["ingredients"]:
@@ -63,13 +64,13 @@ while machine_on:
 
     if user_choice == "off":
         machine_on = False
-    
+
+
     if user_choice == "report":
         print(handle_report())
 
-    state, missing_ingredients = check_resources(user_choice)
-
-    if user_choice in MENU and state:
+    if user_choice in MENU:
+        state, missing_ingredients = check_resources(user_choice)
         pennies = int(input("How many pennies? \n")) * 0.01
         nickels = int(input("How many nickles? \n")) * 0.05
         dimes = int(input("How many dimes? \n")) * 0.1
@@ -91,9 +92,9 @@ while machine_on:
                     f"Here's your change: ${change}")
         elif not money_in:
             print(f"You inserted {total_format}. "
-                    f"Sorry, {user_choice.title()} "
-                    f"costs ${MENU[user_choice]["cost"]:.2f}\f"
-                    "Please try again")
+                f"Sorry, {user_choice.title()} "
+                f"costs ${MENU[user_choice]['cost']:.2f}\n"
+                "Please try again")
     elif user_choice in MENU and not state:
         if len(missing_ingredients) > 1:
             format_missing_ingredents = ", ".join(missing_ingredients[:-1])
@@ -101,12 +102,16 @@ while machine_on:
             print(f"Sorry we are out of {format_missing_ingredents}")
         elif len(missing_ingredients) == 1:
             print(f"Sorry we are out of {missing_ingredients[0]}")
-    else:
+    elif user_choice not in MENU and user_choice != "off" and user_choice != "report":
         print("Please enter a valid option.")
 
 
-    # TODO add function to refill the machine perhaps this, off and report can 
+    # [ ] TODO add function to refill the machine perhaps this, off and report can 
     # only be handled by an admin with a password?
 
-    # TODO Fix error handling for empty resources. When resource empty, else
+    # [ ] TODO Fix error handling for empty resources. When resource empty, else
     # block runs.
+
+    # [ ] TODO Fix bug with report and off command, returns KeyError: '{value}'
+    # It seems to be checking for off or report in check_resources meaning regardless of my precondition check, it's 
+    # bypassing and still running the main logic in the main loop.
