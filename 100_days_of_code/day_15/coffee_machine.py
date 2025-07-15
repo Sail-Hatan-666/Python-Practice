@@ -109,9 +109,9 @@ while machine_on:
     # [ ] TODO add function to refill the machine perhaps this, off and report can 
     # only be handled by an admin with a password?
 
-    # [ ] TODO Fix error handling for empty resources. When resource empty, else
+    # [x] TODO Fix error handling for empty resources. When resource empty, else
     # block runs.
 
-    # [ ] TODO Fix bug with report and off command, returns KeyError: '{value}'
+    # [x] TODO Fix bug with report and off command, returns KeyError: '{value}'
     # It seems to be checking for off or report in check_resources meaning regardless of my precondition check, it's 
     # bypassing and still running the main logic in the main loop.
