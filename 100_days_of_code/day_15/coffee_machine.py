@@ -49,17 +49,14 @@ def handle_payment(
     elif total == cost:
         return True, total, total_format, change
 
-# def input_validation(user_input, denomination):
-#     repeat = True
-#     while repeat:
-#         try:
-#             int(user_input) * denomination
-#         except ValueError:
-#             print("Please enter a valid number")
-#         else:
-#             break
-#         finally:
-#             repeat = False
+def input_validation(prompt, denomination):
+    while True:
+        user_payment = input(prompt)
+        try:
+            return int(user_payment) * denomination
+        except ValueError:
+            print("Please enter a valid number")
+
 
 machine_on = True
 
@@ -80,61 +77,15 @@ while machine_on:
     if user_choice in MENU:
         state, missing_ingredients = check_resources(user_choice)
         if state and len(missing_ingredients) == 0:
-            # pennies = input("How many pennies? \n")
-            # nickels = input("How many nickles? \n")
-            # dimes = input("How many dimes? \n")
-            # quarters =  input("How many quarters? \n")
+            pennies_multi = 0.01
+            nickels_multi = 0.05
+            dimes_multi = 0.1
+            quarters_multi = 0.25
 
-            # pennies_multi = 0.01
-            # nickels_multi = 0.05
-            # dimes_multi = 0.1
-            # quarters_multi = 0.25
-
-            # input_validation(pennies, pennies_multi)
-            # input_validation(nickels, nickels_multi)
-            # input_validation(dimes, dimes_multi)
-            # input_validation(quarters, quarters_multi)
-
-            repeat = True
-            while repeat:
-                try:
-                    pennies = int(input("How many pennies? \n")) * 0.01
-                except ValueError:
-                    print("Please enter a valid number")
-                else:
-                    break
-                finally:
-                    repeat = True
-
-            while repeat:            
-                try:
-                    nickels = int(input("How many nickles? \n")) * 0.05
-                except ValueError:
-                    print("Please enter a valid number")
-                else:
-                    break
-                finally:
-                    repeat = True
-
-            while repeat:
-                try:
-                    dimes = int(input("How many dimes? \n")) * 0.1
-                except ValueError:
-                    print("Please enter a valid number")
-                else:
-                    break
-                finally:
-                    repeat = True
-
-            while repeat:
-                try:
-                    quarters =  int(input("How many quarters? \n")) * 0.25
-                except ValueError:
-                    print("Please enter a valid number")
-                else:
-                    break
-                finally:
-                    repeat = True
+            pennies = input_validation("How many pennies? \n", pennies_multi)
+            nickels = input_validation("How many nickels? \n", nickels_multi)
+            dimes = input_validation("How many dimes? \n", dimes_multi)
+            quarters = input_validation("How many quarters? \n", quarters_multi)
 
             money_in, total, total_format, change = handle_payment(
                                                     user_choice,
@@ -150,7 +101,7 @@ while machine_on:
             elif money_in and total > MENU[user_choice]["cost"]:
                 make_coffee(user_choice)
                 print(f"You inserted {total_format}. "
-                        f"You're {user_choice.title()} is ready! Enjoy!\n"
+                        f"Your {user_choice.title()} is ready! Enjoy!\n"
                         f"Here's your change: ${change}")
             elif not money_in:
                 print(f"You inserted {total_format}. "
