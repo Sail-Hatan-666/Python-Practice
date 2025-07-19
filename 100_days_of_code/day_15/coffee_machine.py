@@ -82,10 +82,18 @@ while machine_on:
             dimes_multi = 0.1
             quarters_multi = 0.25
 
-            pennies = input_validation("How many pennies? \n", pennies_multi)
-            nickels = input_validation("How many nickels? \n", nickels_multi)
-            dimes = input_validation("How many dimes? \n", dimes_multi)
-            quarters = input_validation("How many quarters? \n", quarters_multi)
+            pennies = input_validation(
+                                    "How many pennies? \n"
+                                    , pennies_multi)
+            nickels = input_validation(
+                                    "How many nickels? \n"
+                                    , nickels_multi)
+            dimes = input_validation(
+                                    "How many dimes? \n"
+                                    , dimes_multi)
+            quarters = input_validation(
+                                    "How many quarters? \n"
+                                    , quarters_multi)
 
             money_in, total, total_format, change = handle_payment(
                                                     user_choice,
@@ -110,8 +118,10 @@ while machine_on:
                     "Please try again")
         elif user_choice in MENU and not state:
             if len(missing_ingredients) > 1:
-                format_missing_ingredents = ", ".join(missing_ingredients[:-1]) + " and " + missing_ingredients[-1]
-                print(f"Sorry we are out of {format_missing_ingredents}")
+                format_missing_ingredients = (", ".join(missing_ingredients[:-1])
+                                            + " and "
+                                            + missing_ingredients[-1])
+                print(f"Sorry we are out of {format_missing_ingredients}")
             elif len(missing_ingredients) == 1:
                 print(f"Sorry we are out of {missing_ingredients[0]}")
     elif user_choice not in MENU and user_choice != "off" and user_choice != "report":
