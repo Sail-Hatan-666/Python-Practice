@@ -1,6 +1,5 @@
 from coffee_data import MENU
 from coffee_data import resources
-from coffee_data import profit
 
 
 def handle_report():
@@ -44,10 +43,9 @@ def handle_payment(
     if total < cost:
         change = None
         return False, total, total_format, change
-    elif total > cost:
+    elif total >= cost:
         return True, total, total_format, change
-    elif total == cost:
-        return True, total, total_format, change
+
 
 def input_validation(prompt, denomination):
     while True:
@@ -126,10 +124,6 @@ while machine_on:
                 print(f"Sorry we are out of {missing_ingredients[0]}")
     elif user_choice not in MENU and user_choice != "off" and user_choice != "report":
         print("Please enter a valid option.")
-
-
-    # [ ] TODO add function to refill the machine perhaps this, off and report can 
-    # only be handled by an admin with a password?
 
     # [ x ] TODO Fix error handling for empty resources. When resource empty, else
     # block runs.
