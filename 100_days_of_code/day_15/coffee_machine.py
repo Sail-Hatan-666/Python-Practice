@@ -124,6 +124,3 @@ while machine_on:
                 print(f"Sorry we are out of {missing_ingredients[0]}")
     elif user_choice not in MENU and user_choice != "off" and user_choice != "report":
         print("Please enter a valid option.")
-
-    # [ x ] TODO Fix error handling for empty resources. When resource empty, else
-    # block runs.
